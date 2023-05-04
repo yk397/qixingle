@@ -1,0 +1,24 @@
+# 配置文件
+
+
+#微信接口调用配置
+userService:
+  url: https://api.weixin.qq.com/sns/jscode2session?appid={1}&secret={2}&js_code={3}&grant_type={4}
+  appid:
+  SECRET: secret
+  grantType:
+
+#数据源
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.NonRegisteringDriver
+    url:
+    username:
+    password:
+#mybatis配置
+mybatis:
+  mapper-locations:
+  type-aliases-package:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
