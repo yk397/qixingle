@@ -1,14 +1,19 @@
 package com.sixandone.qixingle.service.userService.userServiceImpl;
 
+import com.sixandone.qixingle.entity.SysUser;
 import com.sixandone.qixingle.service.userService.SysMenuService;
 import com.sixandone.qixingle.service.userService.SysUserService;
+import com.sixandone.qixingle.vo.SecurityUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ClassName yk
@@ -26,8 +31,20 @@ public class SecurityUserDetailsService implements UserDetailsService {
     @Resource
     private SysMenuService sysMenuService;
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        SysUser sysUser = sysUserService.getByUserName(username);
+        if (sysUser == null) {
+            throw new UsernameNotFoundException("该用户不存在");
+        }
+        List<String> userPermissions = sysMenuService.queryPermissionsByUserOpenId(sysUser.getOpenid());
+        List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
+        for (String userPermission : userPermissions) {
+            authorityList.add(new SimpleGrantedAuthority(userPermission));
+        }
+        SecurityUser securityUser = new SecurityUser(sysUser);
+        securityUser.setAuthorityList(authorityList);
+        return securityUser;
     }
 }

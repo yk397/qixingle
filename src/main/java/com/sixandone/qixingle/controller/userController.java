@@ -1,12 +1,14 @@
 package com.sixandone.qixingle.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sixandone.qixingle.service.userService.userServiceImpl.userServiceImpl;
+import com.sixandone.qixingle.vo.reciveLoginInfo;
 import com.sixandone.qixingle.vo.resposeToClientUser;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * @ClassName yk
@@ -19,15 +21,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/userLogin")
 public class userController {
 
+    @Resource
+    private ObjectMapper objectMapper;
 
     /**
      * @Author:yk
      * @url:/Login/userlogin
      * @return 用户服务
      */
-    @GetMapping("userLogin1/{jscode}/{phoneNumber}/{userName}")
-    public resposeToClientUser userLogin1(@PathVariable("jscode")String jsCode, @PathVariable("phoneNumber")String phoneNumber, @PathVariable("userName")String userName){
-        return new userServiceImpl().loginIn(jsCode,phoneNumber,userName);
-    }
+    @GetMapping("userLogin1/{info}")
+    @ResponseBody
+    public resposeToClientUser userLogin1(@PathVariable("info")String info){
+        try {
+            reciveLoginInfo reciveLoginInfo = objectMapper.readValue(info, reciveLoginInfo.class);
 
+            String jsCode = reciveLoginInfo.getJsCode();
+            String phoneNumber = reciveLoginInfo.getPhoneNumber();
+            String userName = reciveLoginInfo.getUserName();
+
+            return new userServiceImpl().loginIn(jsCode, phoneNumber, userName);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -8,18 +8,6 @@ import com.sixandone.qixingle.vo.resposeToClientUser;
 public interface userService {
 
 
-    /**
-     * 调用微信登录接口
-     * @return 微信接口返回内容的包装对象
-     */
-    public resposeUser loginInWx(String jsCode);
-
-    /**
-     * 将用户信息保存到数据库
-     * @param resposeUser
-     * @return
-     */
-    public Integer addSysUser(resposeUser resposeUser,String phoneNumber,String userName);
 
 
     /**

@@ -5,19 +5,23 @@ import com.sixandone.qixingle.service.userService.SysMenuService;
 import com.sixandone.qixingle.service.userService.SysUserService;
 import com.sixandone.qixingle.service.userService.userService;
 import com.sixandone.qixingle.util.JwtUtils;
+import com.sixandone.qixingle.vo.SecurityUser;
 import com.sixandone.qixingle.vo.resposeToClientUser;
 import com.sixandone.qixingle.vo.resposeUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName yk
- * @Descprition:TODO
+ * @Descprition:提供用户登录服务
  * @Autor DELL
  * @Date 2023/5/1 10:37
  **/
@@ -48,7 +52,8 @@ public class userServiceImpl implements userService {
     private SysMenuService sysMenuService;
 
     @Resource
-    private userService userService;
+    private JwtUtils jwt;
+
 
 
     /**
@@ -56,7 +61,6 @@ public class userServiceImpl implements userService {
      * @param jsCode
      * @return resposeUser类，用于接收微信接口的返回参数类
      */
-    @Override
     public resposeUser loginInWx(String jsCode) {
         //final ResponseEntity<resposeUser> forEntity = restTemplate.getForEntity(url, resposeUser.class, appid, SECRET, jsCode, grantType);
         resposeUser resposeUser = null;
@@ -68,18 +72,30 @@ public class userServiceImpl implements userService {
         return resposeUser;
     }
 
+    /**
+     * 调用微信接口获取用户信息
+     * @return
+     */
     @Override
     public SysUser getUserInfoFromWx() {
         return null;
     }
 
 
-    @Override
+    /**
+     * 存储用户信息到数据库，存储用户的角色
+     * @param resposeUser
+     * @param phoneNumber
+     * @param userName
+     * @return
+     */
     public Integer addSysUser(resposeUser resposeUser,String phoneNumber,String userName) {
         SysUser sysUser = new SysUser();//系统用户
         sysUser.setPhoneNumber(phoneNumber);
         sysUser.setUserName(userName);
         sysUser.setOpenid(resposeUser.getOpenid());
+        sysUser.setSessionKey(resposeUser.getSessionKey());
+        sysUser.setUnionId(resposeUser.getUnionId());
         sysUser.setEnabled(1);
         sysUser.setAccountNoExpired(1);
         sysUser.setAccountNoLocked(1);
@@ -99,18 +115,30 @@ public class userServiceImpl implements userService {
         return 1;
     }
 
+    /**
+     * 产生相应客户端的数据
+     * @param jsCode
+     * @param phoneNumber
+     * @param userName
+     * @return
+     */
     public resposeToClientUser loginIn(String jsCode,String phoneNumber,String userName){
-        resposeUser resposeUser = userService.loginInWx(jsCode);
-        int isAdd = userService.addSysUser(resposeUser,userName,phoneNumber);
+        resposeUser resposeUser = loginInWx(jsCode);
+        int isAdd = addSysUser(resposeUser,userName,phoneNumber);
         if(isAdd == -1){
             return null;
         }
+
+
         resposeToClientUser resposeToClientUser = new resposeToClientUser();
-        JwtUtils jwtUtils = new JwtUtils();
+        resposeToClientUser.setErrCode(resposeUser.getErrCode());
+        resposeToClientUser.setErrMsg(resposeUser.getErrMsg());
+        resposeToClientUser.setToken(jwt.createJwt(resposeUser.getOpenid(),userName,sysMenuService.queryPermissionsByUserOpenId(resposeUser.getOpenid())));
 
 
         return resposeToClientUser;
     }
+
 
 
 }

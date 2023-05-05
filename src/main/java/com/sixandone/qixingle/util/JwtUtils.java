@@ -5,34 +5,39 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.sixandone.qixingle.vo.SecurityUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ClassName yk
- * @Descprition:生成jwt
+ * @Descprition:token工具类，用于生成token，解析touken，获取token中携带的信息
  * @Autor DELL
  * @Date 2023/5/3 9:44
  **/
 @Slf4j
+@Component
 public class JwtUtils {
 
-    private static final String secret="pblcourse";//密钥，可通过微信接口获取
+    @Value("${JWT.secret}")
+    private String secret;
+
+    @Value("${JWT.expiration}")
+    private long expiration;
 
     /**
      * token生成器
-     * @param userId
+     * @param userOpenId
      * @param userName
      * @param authList
      * @return token
      */
-    public String createJwt(Integer userId, String userName, List<String> authList){
+    public String createJwt(String userOpenId, String userName, List<String> authList){
         Date issDate = new Date();//签发时间
-        Date expireDate = new Date(issDate.getTime()+1000*60*60*24);
+        Date expireDate = new Date(issDate.getTime()+1000*expiration*24);
         //头部
         Map<String, Object> headerClaims = new HashMap<>();
         headerClaims.put("alg","HS256");//加密算法：待定
@@ -41,9 +46,35 @@ public class JwtUtils {
                 .withIssuer("qixingle") //设置签发人
                 .withIssuedAt(issDate) //签发时间
                 .withExpiresAt(expireDate) //设置过期时间
-                .withClaim("userId",userId)
+                .withClaim("userOpenId",userOpenId)
                 .withClaim("userName",userName)//自定义声明
                 .withClaim("userAuth",authList)
+                .sign(Algorithm.HMAC256(secret)); //使用HS256进行签名
+    }
+
+    /**
+     * 生成token
+     * @param securityUser
+     * @return
+     */
+    public String createJwt(SecurityUser securityUser,List<String> authList){
+        //头部
+        Map<String, Object> headerClaims = new HashMap<>();
+        headerClaims.put("alg","HS256");//加密算法
+        headerClaims.put("typ","JWT");
+        //自定义声明
+        Map<String, Object> auth = new HashMap<>(2);
+        auth.put("openId",securityUser.getSysUser().getOpenid());
+        auth.put("userName",securityUser.getUsername());
+
+        Date issDate = new Date();//签发时间
+        Date expireDate = new Date(issDate.getTime()+expiration*1000);
+        return JWT.create().withHeader(headerClaims)
+                .withIssuer("qixingle") //设置签发人
+                .withIssuedAt(issDate) //签发时间
+                .withExpiresAt(expireDate) //设置过期时间
+                .withClaim("userInfo",auth)
+                .withClaim("authList",authList)
                 .sign(Algorithm.HMAC256(secret)); //使用HS256进行签名
     }
 
@@ -57,9 +88,6 @@ public class JwtUtils {
         try {
             JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(secret)).build();
             DecodedJWT decodedJWT = jwtVerifier.verify(jwtToken);
-//            Integer userId = decodedJWT.getClaim("userId").asInt();
-//            String userName = decodedJWT.getClaim("userName").asString();
-//            List<String> userAuth = decodedJWT.getClaim("userAuth").asList(String.class);
             log.info("token verify successfully");
             return true;
         } catch (IllegalArgumentException e) {
@@ -70,6 +98,24 @@ public class JwtUtils {
             return false;
         }
     }
+
+    public Map<String,Object> getUserInfo(String jwtToken){
+        try {
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(secret)).build();
+            DecodedJWT decodedJWT = jwtVerifier.verify(jwtToken);
+            Map<String, Object> userInfo = decodedJWT.getClaim("userInfo").asMap();
+            log.info("token verify successfully");
+            return userInfo;
+        } catch (IllegalArgumentException e) {
+            log.error("token verify",e);
+            return null;
+        } catch (JWTVerificationException e) {
+            log.error("token verify",e);
+            return null;
+        }
+
+    }
+
 
     /**
      * 从token中获取userid

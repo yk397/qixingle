@@ -17,5 +17,13 @@ public interface SysUserDao {
      * @return
      */
     Integer addUser(SysUser sysUser);
+
+
+    /**
+     * 根据用户名查询用户信息
+     * @param userName
+     * @return
+     */
+    SysUser queryByUserName(String userName);
 }
 

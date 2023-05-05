@@ -1,6 +1,5 @@
 package com.sixandone.qixingle.dao;
 
-import com.sixandone.qixingle.entity.SysUser;
 
 import java.util.List;
 
@@ -14,11 +13,11 @@ public interface SysMenuDao {
     List<String> queryPermissionsByRole(String role);
 
     /**
-     * 根据用户id查询用户权限
-     * @param userId
+     * 根据用户useropenid查询用户权限
+     * @param userOpenId
      * @return
      */
-    List<String> queryPermissionByUserId(Integer userId);
+    List<String> queryPermissionByUserId(String userOpenId);
 
 
     /**

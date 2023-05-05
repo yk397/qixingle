@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 
 /**
  * @ClassName yk
- * @Descprition:TODO
+ * @Descprition:系统用户信息服务
  * @Autor DELL
  * @Date 2023/5/2 23:38
  **/
@@ -29,5 +29,10 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public Integer addUser(SysUser sysUser) {
         return sysUserDao.addUser(sysUser);
+    }
+
+    @Override
+    public SysUser getByUserName(String userName) {
+        return sysUserDao.queryByUserName(userName);
     }
 }

@@ -21,6 +21,8 @@ public class SysUser implements Serializable {
 
     private Integer userId;//用户id
     private String openid;//微信用户唯一标识
+    private String sessionKey;//会话密钥
+    private String unionId;//用户在开放平台的唯一标识
     private String phoneNumber;//用户电话号码
     private String userName;//用户名
     private String address;//用户所在地址

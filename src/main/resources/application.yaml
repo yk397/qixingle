@@ -22,3 +22,8 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#jwt的配置
+JWT:
+  secret: feichang6and1
+  expiration: 1800
