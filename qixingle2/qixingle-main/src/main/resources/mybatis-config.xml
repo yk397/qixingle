@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--mybatis核心配置文件中的标签要按照指定的顺序进行配置-->
+<configuration>
+    <!--引入properties文件，此后就可以在当前文件中使用的方式访问value-->
+    <properties resource="jdbc.properties"/>
+
+    <settings>
+        <!--将下划线映射为驼峰-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--开启延迟加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--按需加载-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+    <!--name属性填入pojo文件路径例如（com.jhr.mybatis.pojo）-->
+    <typeAliases>
+        <package name="com.sixandone.qixingle.entity"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--引入mybatis的映射文件-->
+    <mappers>
+        <package name="com.sixandone.qixingle.dao"/>
+    </mappers>
+
+</configuration>
