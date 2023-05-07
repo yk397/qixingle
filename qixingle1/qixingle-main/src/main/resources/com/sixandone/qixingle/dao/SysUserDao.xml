@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sixandone.qixingle.dao.SysUserDao">
+
+    <!--根据电话号码查询用户信息-->
+    <select id="getByPhoneNumber" resultType="com.sixandone.qixingle.entity.SysUser">
+         select * from t_user where phoneNumber = #{phoneNumber}
+    </select>
+
+    <!--添加有用户-->
+    <insert id="addUser">
+        INSERT INTO `qixingle`.`t_user` (`openID`, `phoneNumber`, `userName`, `address`, `enabled`, `accountNoExpired`, `accountNoLocked`) VALUES (#{openid}, #{phoneNumber}, #{userName}, #{address}, #{enabled}, #{accountNoExpired}, #{accountNoLocked})
+    </insert>
+
+</mapper>
