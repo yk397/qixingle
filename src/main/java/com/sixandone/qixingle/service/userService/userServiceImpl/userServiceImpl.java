@@ -5,19 +5,15 @@ import com.sixandone.qixingle.service.userService.SysMenuService;
 import com.sixandone.qixingle.service.userService.SysUserService;
 import com.sixandone.qixingle.service.userService.userService;
 import com.sixandone.qixingle.util.JwtUtils;
-import com.sixandone.qixingle.vo.SecurityUser;
 import com.sixandone.qixingle.vo.resposeToClientUser;
 import com.sixandone.qixingle.vo.resposeUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @ClassName yk
@@ -39,11 +35,8 @@ public class userServiceImpl implements userService {
     private String appid;
 
     @Resource
-    private final RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
-    public userServiceImpl() {
-        restTemplate = new RestTemplate();
-    }
 
     @Resource
     private SysUserService sysUserService;
@@ -62,10 +55,10 @@ public class userServiceImpl implements userService {
      * @return resposeUser类，用于接收微信接口的返回参数类
      */
     public resposeUser loginInWx(String jsCode) {
-        //final ResponseEntity<resposeUser> forEntity = restTemplate.getForEntity(url, resposeUser.class, appid, SECRET, jsCode, grantType);
         resposeUser resposeUser = null;
         try {
             resposeUser = restTemplate.getForObject(url, resposeUser.class, appid, SECRET, jsCode, grantType);
+            log.info("微信接口调用成功");
         } catch (RestClientException e) {
             log.error("code2Session",e);
         }

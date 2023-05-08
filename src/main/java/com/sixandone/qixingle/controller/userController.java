@@ -2,10 +2,12 @@ package com.sixandone.qixingle.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sixandone.qixingle.service.userService.userService;
 import com.sixandone.qixingle.service.userService.userServiceImpl.userServiceImpl;
 import com.sixandone.qixingle.vo.reciveLoginInfo;
 import com.sixandone.qixingle.vo.resposeToClientUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -24,6 +26,9 @@ public class userController {
     @Resource
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private userService userService;
+
     /**
      * @Author:yk
      * @url:/Login/userlogin
@@ -39,7 +44,7 @@ public class userController {
             String phoneNumber = reciveLoginInfo.getPhoneNumber();
             String userName = reciveLoginInfo.getUserName();
 
-            return new userServiceImpl().loginIn(jsCode, phoneNumber, userName);
+            return userService.loginIn(jsCode, phoneNumber, userName);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

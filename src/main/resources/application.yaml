@@ -6,7 +6,7 @@ userService:
   url: https://api.weixin.qq.com/sns/jscode2session?appid={1}&secret={2}&js_code={3}&grant_type={4}
   appid:
   SECRET: secret
-  grantType:
+  grantType: authorization_code
 
 #数据源
 spring:
