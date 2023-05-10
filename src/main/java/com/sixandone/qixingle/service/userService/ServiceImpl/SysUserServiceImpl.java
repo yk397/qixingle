@@ -1,4 +1,4 @@
-package com.sixandone.qixingle.service.userService.userServiceImpl;
+package com.sixandone.qixingle.service.userService.ServiceImpl;
 
 import com.sixandone.qixingle.dao.SysUserDao;
 import com.sixandone.qixingle.entity.SysUser;

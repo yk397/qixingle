@@ -1,4 +1,4 @@
-package com.sixandone.qixingle.service.userService.userServiceImpl;
+package com.sixandone.qixingle.service.userService.ServiceImpl;
 
 import com.sixandone.qixingle.entity.SysUser;
 import com.sixandone.qixingle.service.userService.SysMenuService;
