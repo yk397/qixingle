@@ -1,9 +1,11 @@
 package com.sixandone.qixingle.dao;
 
 import com.sixandone.qixingle.entity.Bicycle;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface BicycleInfoDao {
 
     /**

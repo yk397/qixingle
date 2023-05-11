@@ -1,7 +1,9 @@
 package com.sixandone.qixingle.controller;
 
-import com.sixandone.qixingle.service.resourceService.queryBicycleInfoService;
+import com.sixandone.qixingle.service.service.userServiceImpl.bicycleService;
 import com.sixandone.qixingle.vo.resposeToClientBicycle;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,10 +20,12 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/resources")
+@NoArgsConstructor
+@AllArgsConstructor
 public class resourcesController {
 
     @Resource
-    private queryBicycleInfoService queryBicycleInfoService;
+    private bicycleService bicycleService;
 
 
     /**
@@ -32,7 +36,7 @@ public class resourcesController {
     @ResponseBody
     public List<resposeToClientBicycle> getBicycleShow(){
 
-        return queryBicycleInfoService.getBicycleInfo();
+        return bicycleService.getBicycleInfo();
     }
 
 }

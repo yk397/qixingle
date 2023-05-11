@@ -1,4 +1,4 @@
-package com.sixandone.qixingle.service.resourceService;
+package com.sixandone.qixingle.service.service.userServiceImpl;
 
 import com.sixandone.qixingle.dao.BicycleInfoDao;
 import com.sixandone.qixingle.entity.Bicycle;
@@ -18,8 +18,7 @@ import java.util.List;
  **/
 @Service
 @Slf4j
-public class queryBicycleInfoService {
-
+public class bicycleService {
     @Resource
     private BicycleInfoDao bicycleInfoDao;
 

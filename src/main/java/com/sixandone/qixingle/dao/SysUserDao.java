@@ -1,7 +1,9 @@
 package com.sixandone.qixingle.dao;
 
 import com.sixandone.qixingle.entity.SysUser;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface SysUserDao {
 
     /**

@@ -26,6 +26,9 @@ public class MyWebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
+        http.authorizeHttpRequests()
+                .mvcMatchers("/wx/user/{appid}/**")
+                .permitAll();
 
         return http.build();
     }

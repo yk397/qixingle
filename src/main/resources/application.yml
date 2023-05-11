@@ -12,9 +12,9 @@ userService:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.NonRegisteringDriver
-    url:
-    username:
-    password:
+    url: jdbc:mysql://localhost:3306/book_manage?useUnicode=true&characterEncoding=utf8
+    username: student
+    password: 1234567
 #mybatis配置
 mybatis:
   mapper-locations:
@@ -27,3 +27,20 @@ mybatis:
 JWT:
   secret: feichang6and1
   expiration: 1800
+
+
+logging:
+  level:
+    org.springframework.web: info
+    com.github.binarywang.demo.wx.miniapp: debug
+    cn.binarywang.wx.miniapp: debug
+wx:
+  miniapp:
+    configs:
+      - appid: wxe66c8a3fab1d8cfd
+        secret: 77d166b4b4d32d8cb12a4067c7b853d9
+        token: token
+        aesKey:
+        msgDataFormat: JSON
+
+
