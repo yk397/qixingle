@@ -1,8 +1,8 @@
-package com.sixandone.qixingle.service.service.userServiceImpl;
+package com.sixandone.qixingle.service.userServiceImpl;
 
 import com.sixandone.qixingle.entity.SysUser;
-import com.sixandone.qixingle.service.service.SysMenuService;
-import com.sixandone.qixingle.service.service.userService;
+import com.sixandone.qixingle.service.SysMenuService;
+import com.sixandone.qixingle.service.userService;
 import com.sixandone.qixingle.vo.SecurityUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,8 +33,8 @@ public class SecurityUserDetailsService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUser sysUser = userService.queryUserByUserName(username);
+    public UserDetails loadUserByUsername(String openid) throws UsernameNotFoundException {
+        SysUser sysUser = userService.queryUserByUserName(openid);
         if (sysUser == null) {
             throw new UsernameNotFoundException("该用户不存在");
         }

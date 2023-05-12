@@ -1,6 +1,7 @@
 package com.sixandone.qixingle.vo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,9 +14,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class resposeToClientUser {
     private String token;
-    private String errCode;
-    private String errMsg;
+    private Object session;
 
 }

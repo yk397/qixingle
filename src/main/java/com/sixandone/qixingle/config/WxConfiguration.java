@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 /**
  * @ClassName yk
- * @Descprition:微信相关配置
+ * @Descprition: 微信相关配置
  * @Autor DELL
  * @Date 2023/5/11 8:43
  **/

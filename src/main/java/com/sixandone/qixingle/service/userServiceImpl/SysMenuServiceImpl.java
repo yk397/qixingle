@@ -1,7 +1,7 @@
-package com.sixandone.qixingle.service.service.userServiceImpl;
+package com.sixandone.qixingle.service.userServiceImpl;
 
 import com.sixandone.qixingle.dao.SysMenuDao;
-import com.sixandone.qixingle.service.service.SysMenuService;
+import com.sixandone.qixingle.service.SysMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

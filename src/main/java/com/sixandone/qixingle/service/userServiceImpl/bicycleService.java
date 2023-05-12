@@ -1,4 +1,4 @@
-package com.sixandone.qixingle.service.service.userServiceImpl;
+package com.sixandone.qixingle.service.userServiceImpl;
 
 import com.sixandone.qixingle.dao.BicycleInfoDao;
 import com.sixandone.qixingle.entity.Bicycle;

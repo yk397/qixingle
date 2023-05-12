@@ -1,9 +1,10 @@
-package com.sixandone.qixingle.service.service.userServiceImpl;
+package com.sixandone.qixingle.service.userServiceImpl;
 
 import com.sixandone.qixingle.dao.SysUserDao;
 import com.sixandone.qixingle.entity.SysUser;
-import com.sixandone.qixingle.service.service.SysMenuService;
-import com.sixandone.qixingle.service.service.userService;
+import com.sixandone.qixingle.enums.Role;
+import com.sixandone.qixingle.service.SysMenuService;
+import com.sixandone.qixingle.service.userService;
 import com.sixandone.qixingle.util.JwtUtils;
 import com.sixandone.qixingle.vo.resposeUser;
 import lombok.NoArgsConstructor;
@@ -107,6 +108,11 @@ public class userServiceImpl implements userService {
     }
 
     @Override
+    public Boolean checkUserByOpenid(String openid) {
+        return null;
+    }
+
+    @Override
     public SysUser queryUserByUserName(String username) {
         return null;
     }
@@ -123,6 +129,11 @@ public class userServiceImpl implements userService {
 
     @Override
     public List<SysUser> queryUsersByRole(String Role) {
+        return null;
+    }
+
+    @Override
+    public List<String> queryUserAuthorities(Role Role) {
         return null;
     }
 }

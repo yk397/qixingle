@@ -1,6 +1,6 @@
 package com.sixandone.qixingle.controller;
 
-import com.sixandone.qixingle.service.service.userServiceImpl.bicycleService;
+import com.sixandone.qixingle.service.userServiceImpl.bicycleService;
 import com.sixandone.qixingle.vo.resposeToClientBicycle;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

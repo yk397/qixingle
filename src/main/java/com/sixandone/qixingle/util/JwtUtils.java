@@ -31,11 +31,10 @@ public class JwtUtils {
     /**
      * token生成器
      * @param userOpenId
-     * @param userName
      * @param authList
      * @return token
      */
-    public String createJwt(String userOpenId, String userName, List<String> authList){
+    public String createJwt(String userOpenId,List<String> authList){
         Date issDate = new Date();//签发时间
         Date expireDate = new Date(issDate.getTime()+1000*expiration*24);
         //头部
@@ -47,15 +46,14 @@ public class JwtUtils {
                 .withIssuedAt(issDate) //签发时间
                 .withExpiresAt(expireDate) //设置过期时间
                 .withClaim("userOpenId",userOpenId)
-                .withClaim("userName",userName)//自定义声明
                 .withClaim("userAuth",authList)
                 .sign(Algorithm.HMAC256(secret)); //使用HS256进行签名
     }
 
     /**
      * 生成token
-     * @param securityUser
-     * @return
+     * @param securityUser 安全用户
+     * @return token
      */
     public String createJwt(SecurityUser securityUser,List<String> authList){
         //头部
@@ -118,44 +116,27 @@ public class JwtUtils {
 
 
     /**
-     * 从token中获取userid
-     * @param jwtToken
-     * @return -1：获取失败 正整数：userId
+     * 从token中获取openid
+     * @param jwtToken token
+     * @return openid
      */
-    public Integer getUserIdFromToken(String jwtToken){
+    public String getUserOpenId(String jwtToken){
         DecodedJWT decodedJWT = null;
         try {
             JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(secret)).build();
             decodedJWT = jwtVerifier.verify(jwtToken);
         } catch (Exception e) {
             log.error("token verify",e);
-            return -1;
+            return null;
         }
-        Integer userId = decodedJWT.getClaim("userId").asInt();
-        return userId;
+        String openid = decodedJWT.getClaim("userOpenId").asString();
+        return openid;
     }
 
-    /**
-     * 从token中获取用户名
-     * @param jwtToken
-     * @return 空：获取失败 不为空：userName
-     */
-    public String getUserNameFromToken(String jwtToken){
-        DecodedJWT decodedJWT = null;
-        try {
-            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(secret)).build();
-            decodedJWT = jwtVerifier.verify(jwtToken);
-        } catch (Exception e) {
-            log.error("token verify",e);
-            return "";
-        }
-        String userName = decodedJWT.getClaim("userName").asString();
-        return userName;
-    }
 
     /**
      * 从token中获取权限
-     * @param jwtToken
+     * @param jwtToken token
      * @return null：获取失败 List<String>；userAuth
      */
     public List<String> getUserAuthFromToken(String jwtToken){

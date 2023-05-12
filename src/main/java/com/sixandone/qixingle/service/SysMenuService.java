@@ -1,4 +1,4 @@
-package com.sixandone.qixingle.service.service;
+package com.sixandone.qixingle.service;
 
 import java.util.List;
 

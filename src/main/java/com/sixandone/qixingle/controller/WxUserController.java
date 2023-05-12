@@ -5,16 +5,23 @@ import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import cn.binarywang.wx.miniapp.util.WxMaConfigHolder;
+import com.sixandone.qixingle.enums.Role;
+import com.sixandone.qixingle.entity.SysUser;
+import com.sixandone.qixingle.service.userService;
+import com.sixandone.qixingle.util.JwtUtils;
 import com.sixandone.qixingle.util.json.JsonUtils;
-import com.sixandone.qixingle.vo.resposeUser;
+import com.sixandone.qixingle.vo.resposeToClientUser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
 
 /**
  * 微信小程序用户接口
@@ -27,6 +34,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/wx/user/{appid}")
 public class WxUserController {
     private final WxMaService wxMaService;
+
+    @Autowired
+    private userService userService;
+
+    @Autowired
+    private JwtUtils jwtUtils;
+
 
     /**
      * 登陆接口
@@ -46,8 +60,28 @@ public class WxUserController {
             log.info(session.getSessionKey());
             log.info(session.getOpenid());
             //TODO 可以增加自己的逻辑，关联业务相关数据
+            //1、查询是否有用户2、添加用户3、生成tokoen
 //            resposeUser resposeUser = new resposeUser();
-            return JsonUtils.toJson(session);
+            Boolean isExist = userService.checkUserByOpenid(session.getOpenid());
+            if(!isExist){
+                SysUser sysUser = new SysUser();
+                sysUser.setOpenid(session.getOpenid());
+                sysUser.setUnionId(session.getUnionid());
+                sysUser.setSessionKey(session.getSessionKey());
+                sysUser.setCreateTime(new Date());
+                sysUser.setAccountNoExpired(1);
+                sysUser.setAccountNoLocked(1);
+                userService.addSysUser(sysUser);
+            }else {
+                return "用户重复";
+            }
+            //创建token
+            String jwt = jwtUtils.createJwt(session.getOpenid(), userService.queryUserAuthorities(Role.RENT_USER));
+            return JsonUtils.toJson(resposeToClientUser.builder()
+                    .token(jwt)
+                    .session(session)
+                    .build()
+            );
         } catch (WxErrorException e) {
             log.error(e.getMessage(), e);
             return e.toString();
