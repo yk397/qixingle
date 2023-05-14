@@ -13,4 +13,11 @@ public interface BicycleInfoDao {
      * @return
      */
     public List<Bicycle> queryBicycleInfo();
+
+    /**
+     * 用自行车编号查询自行车对象
+     * @param bicycleNumber 自行车编号
+     * @return 自行车对象
+     */
+    public Bicycle queryBicycleByNumber(String bicycleNumber);
 }

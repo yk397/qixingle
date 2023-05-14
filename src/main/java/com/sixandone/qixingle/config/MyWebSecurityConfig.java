@@ -28,29 +28,22 @@ public class MyWebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
-        http.authorizeHttpRequests()
-                .mvcMatchers("/wx/user/{appid}/**")
-                .permitAll();
-
-        return http.build();
-    }
-
-    @Bean
-    protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(jwtCheckFilter, UsernamePasswordAuthenticationFilter.class);
-        http.authorizeRequests().anyRequest().authenticated();
         http.authorizeHttpRequests()
                 .mvcMatchers("/wx/user/{appid}/**")
-                .permitAll();
+                .permitAll()
+                .anyRequest().authenticated();
+
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         return http.build();
     }
+
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
 
 
-        return (web -> web.ignoring().antMatchers("/userLogin/**"));
+        return (web -> web.ignoring().antMatchers("/wx/user/{appid}/**"));
     }
 
 }

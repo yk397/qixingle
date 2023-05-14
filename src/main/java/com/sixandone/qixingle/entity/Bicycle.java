@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 public class Bicycle {
 
     private String bicycleNumber;//自行车编号
+    private String businessId;//自行车所属人id
     private String bicycleBrand;//自行车品牌
     private BigDecimal bicyclePrice;//自行车价格
     private String bicycleType;//自行车类型

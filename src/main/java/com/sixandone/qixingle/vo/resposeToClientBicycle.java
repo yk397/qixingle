@@ -2,6 +2,7 @@ package com.sixandone.qixingle.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
  * @Date 2023/5/7 8:02
  **/
 @Data
-public class resposeToClientBicycle {
+public class resposeToClientBicycle implements Serializable {
 
     private String bicycleNumber;//自行车编号
     private String bicycleBrand;//自行车品牌
