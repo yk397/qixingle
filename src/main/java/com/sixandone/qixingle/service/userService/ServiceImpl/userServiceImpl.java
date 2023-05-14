@@ -1,10 +1,12 @@
-package com.sixandone.qixingle.service.userService.userServiceImpl;
+package com.sixandone.qixingle.service.userService.ServiceImpl;
 
 import com.sixandone.qixingle.entity.SysUser;
 import com.sixandone.qixingle.service.userService.SysMenuService;
 import com.sixandone.qixingle.service.userService.SysUserService;
 import com.sixandone.qixingle.service.userService.userService;
 import com.sixandone.qixingle.util.JwtUtils;
+import com.sixandone.qixingle.vo.WxPhoneNumberInfo;
+import com.sixandone.qixingle.vo.WxUserInfo;
 import com.sixandone.qixingle.vo.resposeToClientUser;
 import com.sixandone.qixingle.vo.resposeUser;
 import lombok.extern.slf4j.Slf4j;
@@ -65,15 +67,6 @@ public class userServiceImpl implements userService {
         return resposeUser;
     }
 
-    /**
-     * 调用微信接口获取用户信息
-     * @return
-     */
-    @Override
-    public SysUser getUserInfoFromWx() {
-        return null;
-    }
-
 
     /**
      * 存储用户信息到数据库，存储用户的角色
@@ -131,6 +124,28 @@ public class userServiceImpl implements userService {
 
         return resposeToClientUser;
     }
+
+    @Override
+    public resposeUser getSessionInfo(String jsCode) {
+        return null;
+    }
+
+    @Override
+    public WxUserInfo getUserInfo(String sessionKey, String encryptedData, String ivStr) {
+        return null;
+    }
+
+    @Override
+    public WxPhoneNumberInfo getPhoneNoInfo(String code) {
+        return null;
+    }
+
+    @Override
+    public boolean checkUserInfo(String sessionKey, String rawData, String signature) {
+        return false;
+    }
+
+
 
 
 

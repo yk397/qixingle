@@ -1,9 +1,8 @@
-package com.sixandone.qixingle.service.userService.userServiceImpl;
+package com.sixandone.qixingle.service.userServiceImpl;
 
 import com.sixandone.qixingle.dao.SysMenuDao;
-import com.sixandone.qixingle.service.userService.SysMenuService;
+import com.sixandone.qixingle.service.SysMenuService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
