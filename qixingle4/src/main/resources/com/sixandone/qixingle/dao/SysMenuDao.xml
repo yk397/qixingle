@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sixandone.qixingle.dao.SysMenuDao">
+
+    <!--根据用户角色查询权限-->
+    <select id="queryPermissionsByRole" resultType="string">
+        SELECT Authority FROM `qixingle`.`t_authority` where AuthID =(SELECT AuthID FROM `qixingle`.`t_rolecorrauth` WHERE RoleID =(SELECT RoleID FROM `qixingle`.`t_role` where RoleName LIKE '%${role}%'))
+    </select>
+
+    <!--根据用户openid查询用户权限id(Role_id)-->
+    <select id="queryPermissionByUserId" resultType="string">
+        SELECT Authority FROM `qixingle`.`t_authority` where AuthID =(SELECT AuthID FROM `qixingle`.`t_rolecorrauth` where RoleID = (SELECT Role_ID FROM `qixingle`.`t_usercorrrole` WHERE User_openID = '${userOpenId}'))
+    </select>
+
+
+    <!--添加用户角色-->
+    <insert id="addUserRoleByUserId">
+        INSERT INTO `qixingle`.`t_usercorrrole` (`User_openID`, `Role_ID`) VALUES ('${userOpenId}', ${Role})
+    </insert>
+
+</mapper>
