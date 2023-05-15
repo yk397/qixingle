@@ -2,6 +2,7 @@ package com.sixandone.qixingle.service.userServiceImpl;
 
 import com.sixandone.qixingle.entity.Orders;
 import com.sixandone.qixingle.service.orderService;
+import com.sixandone.qixingle.vo.responseToClientOrder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +79,21 @@ public class orderServiceImpl implements orderService {
 
     @Override
     public BigDecimal calculateTotal(Object order) {
+        return null;
+    }
+
+    @Override
+    public Object generateRentOrder(String rentUserOpenId, List<String> bicycleNumbers) {
+        return null;
+    }
+
+    @Override
+    public Object effectOrder(Object order) {
+        return null;
+    }
+
+    @Override
+    public Boolean checkOrder(responseToClientOrder orders) {
         return null;
     }
 }

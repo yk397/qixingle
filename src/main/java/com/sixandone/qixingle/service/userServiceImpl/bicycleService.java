@@ -113,6 +113,11 @@ public class bicycleService {
         return null;
     }
 
+    /**
+     * 存在null值
+     * @param bicycles
+     * @return
+     */
     public boolean hasNull(List<Bicycle> bicycles) {
         for (Bicycle bicycle : bicycles) {
             if (bicycle == null) {
@@ -120,5 +125,17 @@ public class bicycleService {
             }
         }
         return true;
+    }
+
+    /**
+     * 检查是否超过数量
+     * @param bicycles
+     * @return
+     */
+    public boolean checkQuantity(List<String> bicycles) {
+        if (bicycles.size() <= 5) {
+            return true;
+        }
+        return false;
     }
 }

@@ -1,7 +1,10 @@
 package com.sixandone.qixingle.service;
 
 import com.sixandone.qixingle.entity.Business;
+import com.sixandone.qixingle.entity.Orders;
 import com.sixandone.qixingle.vo.businessRevenge;
+import com.sixandone.qixingle.vo.responseToClientOrder;
+import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
@@ -46,6 +49,7 @@ public interface businessService {
      * @return 返回符合条件的Business列表
      */
     List<Business> queryBusiness(Object...item);
+
 
     //面向商户
 

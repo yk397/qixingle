@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @ClassName yk
- * @Descprition:出错页面控制器
+ * @Descprition: 全局抓取异常返回固定格式
  * @Autor DELL
  * @Date 2023/5/10 11:11
  **/
