@@ -74,7 +74,6 @@
             <artifactId>java-jwt</artifactId>
             <version>3.11.0</version>
         </dependency>
-
         <dependency>
             <groupId>com.github.binarywang</groupId>
             <artifactId>weixin-java-miniapp</artifactId>
@@ -89,9 +88,6 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
-
-
-
     </dependencies>
 
     <build>

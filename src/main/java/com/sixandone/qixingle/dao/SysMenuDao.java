@@ -2,6 +2,7 @@ package com.sixandone.qixingle.dao;
 
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,14 +14,14 @@ public interface SysMenuDao {
      * @param role 用户角色
      * @return
      */
-    List<String> queryPermissionsByRole(String role);
+    List<String> queryPermissionsByRole(@Param("role") String role);
 
     /**
      * 根据用户useropenid查询用户权限
      * @param userOpenId
      * @return
      */
-    List<String> queryPermissionByUserId(String userOpenId);
+    List<String> queryPermissionByUserId(@Param("userOpenId") String userOpenId);
 
 
     /**
@@ -29,5 +30,5 @@ public interface SysMenuDao {
      * @param Role
      * @return
      */
-    Integer addUserRoleByUserId(String userOpenId,String Role);
+    Integer addUserRoleByUserId(@Param("userOpenId")String userOpenId,@Param("Role")String Role);
 }

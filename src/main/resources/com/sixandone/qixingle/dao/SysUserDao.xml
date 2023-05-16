@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sixandone.qixingle.dao.SysUserDao">
+
+    <!--根据电话号码查询用户信息-->
+    <select id="getByPhoneNumber" resultType="com.sixandone.qixingle.entity.SysUser">
+         select * from t_user where phoneNumber = #{phoneNumber}
+    </select>
+
+
+
+<!--添加用户-->
+    <insert id="addUser">
+        INSERT INTO `qixingle`.`t_user` (`userID`,`openID`, `sessionKey`, `unionId`, `phoneNumber`, `userName`, `createTime`, `address`, `enabled`, `accountNoExpired`, `accountNoLocked`) VALUES (null, #{openid} ,#{sessionKey}, #{unionId}, #{phoneNumber},#{userName},#{createTime},#{address}, #{enabled},#{accountNoExpired},#{accountNoLocked})
+    </insert>
+
+
+
+
+<!--    &lt;!&ndash;添加有用户&ndash;&gt;-->
+<!--    <insert id="addUser">-->
+<!--        INSERT INTO `qixingle`.`t_user` (`openID`, `sessionKey`, `unionId`, `phoneNumber`, `userName`, `createTime`, `address`, `enabled`, `accountNoExpired`, `accountNoLocked`) VALUES ( #{openid} ,#{sessionKey}, #{unionId}, #{phoneNumber},#{userName},#{createTime},#{address}, #{enabled},#{accountNoExpired},#{accountNoLocked})-->
+<!--    </insert>-->
+
+    <select id="queryByUserName" resultType="com.sixandone.qixingle.entity.SysUser">
+        SELECT * FROM `qixingle`.`t_user` WHERE `userName` = #{userName}
+    </select>
+
+</mapper>

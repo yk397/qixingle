@@ -2,6 +2,7 @@ package com.sixandone.qixingle.dao;
 
 import com.sixandone.qixingle.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface SysUserDao {
@@ -11,14 +12,15 @@ public interface SysUserDao {
      * @param phoneNumber 用户的电话号码
      * @return 系统用户对象 SysUser
      */
-    SysUser getByPhoneNumber(String phoneNumber);
+    SysUser getByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
     /**
      * 添加用户信息
      * @param sysUser
      * @return
      */
-    Integer addUser(SysUser sysUser);
+    Integer addUser( SysUser sysUser);
+
 
 
     /**
@@ -26,6 +28,6 @@ public interface SysUserDao {
      * @param userName
      * @return
      */
-    SysUser queryByUserName(String userName);
+    SysUser queryByUserName(@Param("userName") String userName);
 }
 
