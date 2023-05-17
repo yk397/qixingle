@@ -96,7 +96,7 @@ public interface userService {
 
 
     /**
-     * 查找不同角色的用户
+     * 查找不同角色的用户（分解）
      * @param Role 角色
      * @return List<SysUser> 用户信息列表
      */

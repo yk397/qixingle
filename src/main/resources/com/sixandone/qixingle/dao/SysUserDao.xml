@@ -10,22 +10,33 @@
     </select>
 
 
-
 <!--添加用户-->
     <insert id="addUser">
         INSERT INTO `qixingle`.`t_user` (`userID`,`openID`, `sessionKey`, `unionId`, `phoneNumber`, `userName`, `createTime`, `address`, `enabled`, `accountNoExpired`, `accountNoLocked`) VALUES (null, #{openid} ,#{sessionKey}, #{unionId}, #{phoneNumber},#{userName},#{createTime},#{address}, #{enabled},#{accountNoExpired},#{accountNoLocked})
     </insert>
 
+<!--跟新用户信息-->
+    <update id="modifyUser">
+        UPDATE `qixingle`.`t_user` SET `phoneNumber` = #{phoneNumber},`userName` = #{username},`address` = #{address} WHERE `openID` = #{openID}
+    </update>
 
 
-
-<!--    &lt;!&ndash;添加有用户&ndash;&gt;-->
-<!--    <insert id="addUser">-->
-<!--        INSERT INTO `qixingle`.`t_user` (`openID`, `sessionKey`, `unionId`, `phoneNumber`, `userName`, `createTime`, `address`, `enabled`, `accountNoExpired`, `accountNoLocked`) VALUES ( #{openid} ,#{sessionKey}, #{unionId}, #{phoneNumber},#{userName},#{createTime},#{address}, #{enabled},#{accountNoExpired},#{accountNoLocked})-->
-<!--    </insert>-->
-
+<!--根据用户名查询用户-->
     <select id="queryByUserName" resultType="com.sixandone.qixingle.entity.SysUser">
         SELECT * FROM `qixingle`.`t_user` WHERE `userName` = #{userName}
     </select>
+
+
+<!--根据openid 查询用户信息-->
+    <select id="queryUserByOpenID" resultType="com.sixandone.qixingle.entity.SysUser">
+        SELECT * FROM `qixingle`.`t_user` WHERE `openID` = #{openid}
+    </select>
+
+
+<!--检查是否启用用户-->
+    <select id="checkIsEnabled" resultType="String">
+        SELECT enabled , accountNoExpired  FROM `qixingle`.`t_user` WHERE `openID` = #{openid}
+    </select>
+
 
 </mapper>

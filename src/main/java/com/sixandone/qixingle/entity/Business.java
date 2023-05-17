@@ -19,6 +19,7 @@ public class Business {
     private String businessId;//商家id
     private String businessName;//店铺名称
     private String businessInfo;//商户简介
+
     private String location;//商户粗略位置
     private Date accessionTime;//商家加入时间
     private Integer serviceStatus;//服务状态(0:在服务，1:微服务）

@@ -1,7 +1,9 @@
 package com.sixandone.qixingle;
 
+import com.sixandone.qixingle.dao.BicycleInfoDao;
 import com.sixandone.qixingle.dao.SysMenuDao;
 import com.sixandone.qixingle.dao.SysUserDao;
+import com.sixandone.qixingle.entity.Bicycle;
 import com.sixandone.qixingle.entity.SysUser;
 import com.sixandone.qixingle.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -43,9 +45,6 @@ public class MysqlTest {
     }
 
 
-
-
-
     @Test
     public void TestqueryByUserName(){
         SqlSession sqlSession = SqlSessionUtil.openSession();
@@ -73,4 +72,23 @@ public class MysqlTest {
             System.out.println(Auth);
         }
     }
+
+    @Test
+    public void TestqueryBicycleInfo(){
+        SqlSession sqlSession = SqlSessionUtil.openSession();
+        BicycleInfoDao mapper = sqlSession.getMapper(BicycleInfoDao.class);
+        List<Bicycle> bicycles = mapper.queryBicycleInfo();
+        for(Bicycle bicycle : bicycles){
+            System.out.println(bicycle);
+        }
+    }
+
+    @Test
+    public void TestqueryBicycleByNumber(){
+        SqlSession sqlSession = SqlSessionUtil.openSession();
+        BicycleInfoDao mapper = sqlSession.getMapper(BicycleInfoDao.class);
+        Bicycle bicycle = mapper.queryBicycleByNumber("dIrhqYni");
+        System.out.println(bicycle);
+    }
+
 }
