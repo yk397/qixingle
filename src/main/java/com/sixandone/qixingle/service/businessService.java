@@ -1,10 +1,8 @@
 package com.sixandone.qixingle.service;
 
 import com.sixandone.qixingle.entity.Business;
-import com.sixandone.qixingle.entity.Orders;
 import com.sixandone.qixingle.vo.businessRevenge;
-import com.sixandone.qixingle.vo.responseToClientOrder;
-import org.springframework.core.annotation.Order;
+
 
 import java.util.List;
 
@@ -74,6 +72,14 @@ public interface businessService {
      * @return boolean
      */
     boolean checkIsWork(Business business);
+
+    /**
+     * 查询商家图片
+     * @param bicycleId 自行车编码
+     * @return byte[]
+     */
+    public byte[] queryBusinessImg(String bicycleId);
+
 
 
 }

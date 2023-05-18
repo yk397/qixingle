@@ -2,6 +2,7 @@ package com.sixandone.qixingle.vo;
 
 import lombok.Builder;
 import lombok.Data;
+import com.sixandone.qixingle.exception.rentErrorCodeEnum;
 
 /**
  * @ClassName yk
@@ -11,12 +12,12 @@ import lombok.Data;
  **/
 @Data
 @Builder
-public class HttpResult {
+public class HttpResult<T> {
 
     /**
      * 响应码
      */
-    private int code;
+    private String code;
 
     /**
      * 响应消息
@@ -26,5 +27,31 @@ public class HttpResult {
     /**
      * 响应数据
      */
-    private String data;
+    private T data;
+
+    /**
+     * 接口请求时间
+     */
+    private long timestamp;
+
+
+    public static <T> HttpResult<T> success(T data){
+        return (HttpResult<T>) HttpResult.builder()
+                .code(rentErrorCodeEnum.SUCCESS.geCode())
+                .msg(rentErrorCodeEnum.SUCCESS.getDescription())
+                .data(data)
+                .timestamp(System.currentTimeMillis())
+                .build();
+
+    }
+
+    public static <T> HttpResult<T> fail(T data){
+        return (HttpResult<T>) HttpResult.builder()
+                .code(rentErrorCodeEnum.UNSPECIFIED.geCode())
+                .msg(rentErrorCodeEnum.UNSPECIFIED.getDescription())
+                .data(data)
+                .timestamp(System.currentTimeMillis())
+                .build();
+
+    }
 }

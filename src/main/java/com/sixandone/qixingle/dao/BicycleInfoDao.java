@@ -3,6 +3,7 @@ package com.sixandone.qixingle.dao;
 import com.sixandone.qixingle.entity.Bicycle;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.relational.core.sql.In;
 
 import java.util.List;
 
@@ -26,4 +27,7 @@ public interface BicycleInfoDao {
      * 用于查询自行车照片
      */
     byte[] queryBicycleImage(@Param("bicycleNumber") String bicycleNumber);
+
+
+    Integer changeBicycleStatus(String bicycleNumber);
 }

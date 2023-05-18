@@ -32,6 +32,10 @@ public class MyWebSecurityConfig {
         http.authorizeHttpRequests()
                 .mvcMatchers("/wx/user/{appid}/**")
                 .permitAll()
+                .mvcMatchers("/wx/resource/{appid}/**")
+                .permitAll()
+                .mvcMatchers("/wx/rent/{appid}/**","/wx/return/{appid}/**")
+                .hasRole("RENT_USER")
                 .anyRequest().authenticated();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

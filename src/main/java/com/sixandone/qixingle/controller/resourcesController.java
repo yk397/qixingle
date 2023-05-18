@@ -19,7 +19,7 @@ import java.util.List;
  * @Date 2023/5/7 7:49
  **/
 @RestController
-@RequestMapping("/resources")
+@RequestMapping("/wx/resource/{appid}")
 @NoArgsConstructor
 @AllArgsConstructor
 public class resourcesController {
@@ -32,7 +32,7 @@ public class resourcesController {
      * 获取自行车信息
      * @return
      */
-    @GetMapping("/getBicycles")
+    @GetMapping(value = "/getBicycles",produces = "application/json")
     @ResponseBody
     public List<resposeToClientBicycle> getBicycleShow(){
 

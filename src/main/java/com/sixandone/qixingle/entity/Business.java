@@ -1,6 +1,7 @@
 package com.sixandone.qixingle.entity;
 
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -14,12 +15,13 @@ import java.util.Date;
  * @Date 2023/5/13 9:22
  **/
 @Data
+@Builder
 public class Business {
 
     private String businessId;//商家id
     private String businessName;//店铺名称
     private String businessInfo;//商户简介
-
+    private byte[] businessIMg;//商户图片
     private String location;//商户粗略位置
     private Date accessionTime;//商家加入时间
     private Integer serviceStatus;//服务状态(0:在服务，1:微服务）

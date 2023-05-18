@@ -5,18 +5,23 @@ import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import cn.binarywang.wx.miniapp.util.WxMaConfigHolder;
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
+import com.sixandone.qixingle.service.userServiceImpl.bicycleService;
+import com.sixandone.qixingle.service.businessService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,6 +40,10 @@ import java.util.List;
 public class WxMediaController {
 
     private final WxMaService wxMaService;
+
+    private final bicycleService bicycleService;
+
+    private final businessService businessService;
 
     /**
      * 上传临时素材
@@ -86,5 +95,44 @@ public class WxMediaController {
         WxMaConfigHolder.remove();//清理ThreadLocal
         return media;
     }
+
+    /**
+     * 返回响应自行车图片
+     * @param appid
+     * @param bicycleId
+     * @return
+     */
+    @GetMapping(value = "/img/{bicycleid}",
+            produces = {MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_PNG_VALUE} )
+    public byte[] getBicycleImg(
+            @PathVariable(name = "appid")String appid,
+            @PathVariable(name = "bicycleid")String bicycleId
+    ) throws IOException{
+        byte[] bytes = bicycleService.queryBicycleImg(bicycleId);
+        return bytes;
+
+    }
+
+
+    /**
+     * 返回响应店铺图片
+     * @param appid
+     * @param businessId
+     * @return
+     */
+    @GetMapping(value = "/img/{businessid}",
+            produces = {MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_PNG_VALUE})
+    public byte[] getBusinessImg(
+            @PathVariable(name = "appid")String appid,
+            @PathVariable(name = "businessid")String businessId
+    )throws IOException{
+        byte[] bytes = businessService.queryBusinessImg(businessId);
+        return bytes;
+
+    }
+
+
+
+
 
 }

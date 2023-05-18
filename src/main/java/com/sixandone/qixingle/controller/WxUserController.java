@@ -73,7 +73,13 @@ public class WxUserController {
                 sysUser.setAccountNoLocked(1);
                 userService.addSysUser(sysUser);
             }else {
-                return "用户重复";
+                //更新token
+                String jwt = jwtUtils.createJwt(session.getOpenid(), userService.queryUserAuthorities(Role.RENT_USER));
+                return JsonUtils.toJson(resposeToClientUser.builder()
+                        .token(jwt)
+                        .session(session)
+                        .build()
+                );
             }
             //创建token
             String jwt = jwtUtils.createJwt(session.getOpenid(), userService.queryUserAuthorities(Role.RENT_USER));

@@ -2,11 +2,16 @@ package com.sixandone.qixingle.service.userServiceImpl;
 
 import com.sixandone.qixingle.dao.BicycleInfoDao;
 import com.sixandone.qixingle.entity.Bicycle;
+import com.sixandone.qixingle.exception.rentException;
 import com.sixandone.qixingle.vo.resposeToClientBicycle;
+import com.sixandone.qixingle.exception.rentErrorCodeEnum;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +23,20 @@ import java.util.List;
  **/
 @Service
 @Slf4j
+@AllArgsConstructor
 public class bicycleService {
     @Resource
-    private BicycleInfoDao bicycleInfoDao;
+    private final BicycleInfoDao bicycleInfoDao;
+
 
     /**
      * 获取展示前台的自行车信息
      * @return List<reposeToClientBicycle> 自行车信息列表
      */
+    @Transactional
     public List<resposeToClientBicycle> getBicycleInfo(){
+
+        final DecimalFormat decimalFormat = new DecimalFormat("#.00");
 
         List<Bicycle> bicycles = bicycleInfoDao.queryBicycleInfo();
         List<resposeToClientBicycle> resposeToClientBicycles = new ArrayList<>();
@@ -35,11 +45,11 @@ public class bicycleService {
         for (Bicycle bicycle : bicycles) {
             resposeToClientBicycle resposeToClientBicycle = new resposeToClientBicycle();
             resposeToClientBicycle.setBicycleInfo(bicycle.getBicycleInfo());
-            resposeToClientBicycle.setBicycleImage(bicycle.getBicycleImage());
+            resposeToClientBicycle.setBusinessId(bicycle.getBusinessId());
             resposeToClientBicycle.setBicycleBrand(bicycle.getBicycleBrand());
             resposeToClientBicycle.setBicycleNumber(bicycle.getBicycleNumber());
             resposeToClientBicycle.setBicycleType(bicycle.getBicycleType());
-            resposeToClientBicycle.setBicyclePrice(bicycle.getBicyclePrice());
+            resposeToClientBicycle.setBicyclePrice(decimalFormat.format(bicycle.getBicyclePrice()));
 
             resposeToClientBicycles.add(resposeToClientBicycle);
 
@@ -47,6 +57,15 @@ public class bicycleService {
 
 
         return resposeToClientBicycles;
+    }
+
+    /**
+     * 查询自行车图片
+     * @param bicycleId 自行车编码
+     * @return byte[]
+     */
+    public byte[] queryBicycleImg(String bicycleId){
+        return null;
     }
 
     public Boolean checkBicycleIsUsable(List<Bicycle> bicycles) {
@@ -137,5 +156,35 @@ public class bicycleService {
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * 修改自行车预定状态
+     * @param bicycle
+     * @return
+     */
+    private Boolean updateBicycleStatus(String bicycle) {
+        return bicycleInfoDao.changeBicycleStatus(bicycle)==-1? false:true;
+    }
+
+
+    /**
+     * 将自行车状态改为预定
+     * @param bicycleNumbers
+     * @return
+     */
+    @Transactional
+    public boolean changeToBooked(List<String> bicycleNumbers) {
+        for (String bicycle:bicycleNumbers
+             ) {
+            if (!checkBicycleIsUsable(queryBicycle(bicycle))) {
+                throw new rentException(rentErrorCodeEnum.BICYCLES_ALREADY_BOOKED,"自行车已被预定");
+            }
+            if (!updateBicycleStatus(bicycle)) {
+                throw new rentException(rentErrorCodeEnum.UPDATE_BICYCLE_STATUS_FAIL,"自行车状态修改失败");
+            }
+        }
+        return true;
     }
 }

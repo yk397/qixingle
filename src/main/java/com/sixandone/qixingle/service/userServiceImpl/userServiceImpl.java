@@ -109,7 +109,10 @@ public class userServiceImpl implements userService {
 
     @Override
     public Boolean checkUserByOpenid(String openid) {
-        return null;
+        if (!(sysUserDao.queryUserByOpenID(openid) == null)) {
+            return true;
+        }
+        return false;
     }
 
     @Override

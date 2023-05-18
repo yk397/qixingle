@@ -42,7 +42,7 @@ public class JwtCheckFilter extends OncePerRequestFilter {
         String auth = request.getHeader("Authorization");
         if (StringUtils.isEmpty(auth)) {
             HttpResult httpResult = HttpResult.builder()
-                    .code(0)
+                    .code("0")
                     .msg("jwt 为空")
                     .build();
             printToken(request,response,httpResult);
@@ -51,7 +51,7 @@ public class JwtCheckFilter extends OncePerRequestFilter {
         String jwt = auth.replace("bearer","");//把bearer替换成空
         if (StringUtils.containsWhitespace(jwt)) {
             HttpResult httpResult = HttpResult.builder()
-                    .code(0)
+                    .code("0")
                     .msg("jwt 为空")
                     .build();
             printToken(request,response,httpResult);
@@ -61,7 +61,7 @@ public class JwtCheckFilter extends OncePerRequestFilter {
         boolean verifyToken = jwtUtils.verifyToken(jwt);
         if (!verifyToken) {
             HttpResult httpResult = HttpResult.builder()
-                    .code(0)
+                    .code("0")
                     .msg("jwt 无效")
                     .build();
             printToken(request,response,httpResult);

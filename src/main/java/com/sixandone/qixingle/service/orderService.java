@@ -3,6 +3,7 @@ package com.sixandone.qixingle.service;
 
 import com.sixandone.qixingle.entity.Orders;
 import com.sixandone.qixingle.vo.responseToClientOrder;
+import org.springframework.data.relational.core.sql.In;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,7 +21,7 @@ public interface orderService {
      * @Param rentUserOpenid 租户openid，bicycleNumber 自行车编号
      * @return 订单对象
      */
-    Object generateOrder(String rentUserOpenId, List<String> bicycleNumbers);
+    Object generateOrder(String rentUserOpenId,String businessId, List<String> bicycleNumbers);
 
 
     /**
@@ -28,7 +29,7 @@ public interface orderService {
      * @Param rentUserOpenid 租户openid，bicycleNumber 自行车编号
      * @return 订单对象
      */
-    Object generateRentOrder(String rentUserOpenId, List<String> bicycleNumbers);
+    Object generateRentOrder(String rentUserOpenId,String businessId,List<String> bicycleNumbers);
 
     /**
      * 生成唯一的订单编号
@@ -120,4 +121,5 @@ public interface orderService {
      * @return BigDecimal 金额
      */
     BigDecimal calculateTotal(Object order);
+
 }

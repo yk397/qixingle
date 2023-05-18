@@ -57,4 +57,9 @@ public class businessServiceImpl implements businessService {
     public boolean checkIsWork(Business business) {
         return false;
     }
+
+    @Override
+    public byte[] queryBusinessImg(String bicycleId) {
+        return new byte[0];
+    }
 }

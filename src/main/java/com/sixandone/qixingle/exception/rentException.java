@@ -17,6 +17,8 @@ public class rentException extends RuntimeException {
      */
     private final ErrorCode errorCode;
 
+    private final String descreption;
+
     /**
      * 冗余字段
      */
@@ -29,6 +31,7 @@ public class rentException extends RuntimeException {
     public rentException() {
         super(rentErrorCodeEnum.UNSPECIFIED.getDescription());
         this.errorCode = rentErrorCodeEnum.UNSPECIFIED;
+        this.descreption = this.errorCode.getDescription();
     }
 
     /**
@@ -38,6 +41,7 @@ public class rentException extends RuntimeException {
     public rentException(final ErrorCode errorCode) {
         super(errorCode.getDescription());
         this.errorCode = errorCode;
+        this.descreption = this.errorCode.getDescription();
     }
 
     /**
@@ -47,6 +51,7 @@ public class rentException extends RuntimeException {
     public rentException(final String detailMessage) {
         super(detailMessage);
         this.errorCode = rentErrorCodeEnum.UNSPECIFIED;
+        this.descreption = this.errorCode.getDescription();
     }
 
     /**
@@ -56,6 +61,7 @@ public class rentException extends RuntimeException {
     public rentException(final Throwable throwable) {
         super(throwable);
         this.errorCode = rentErrorCodeEnum.UNSPECIFIED;
+        this.descreption = this.errorCode.getDescription();
     }
 
 
@@ -67,6 +73,7 @@ public class rentException extends RuntimeException {
     public rentException(final ErrorCode errorCode,final Throwable throwable) {
         super(errorCode.getDescription(),throwable);
         this.errorCode = errorCode;
+        this.descreption = this.errorCode.getDescription();
     }
 
     /**
@@ -77,6 +84,7 @@ public class rentException extends RuntimeException {
     public rentException(final ErrorCode errorCode,final String detailMessage) {
         super(detailMessage);
         this.errorCode = errorCode;
+        this.descreption = this.errorCode.getDescription();
     }
 
     /**
@@ -87,6 +95,7 @@ public class rentException extends RuntimeException {
     public rentException(final String detailMessage,final Throwable throwable) {
         super(detailMessage,throwable);
         this.errorCode = rentErrorCodeEnum.UNSPECIFIED;
+        this.descreption = this.errorCode.getDescription();
     }
 
     /**
@@ -99,13 +108,7 @@ public class rentException extends RuntimeException {
                          final String detailMessage) {
         super(detailMessage,throwable);
         this.errorCode = errorCode;
+        this.descreption = this.errorCode.getDescription();
     }
 
-    /**
-     * Getter method for property errorCode
-     * @return value of errorCode
-     */
-    public ErrorCode getErrorCode() {
-        return errorCode;
-    }
 }

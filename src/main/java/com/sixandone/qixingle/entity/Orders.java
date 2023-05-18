@@ -30,7 +30,7 @@ public class Orders {
     private Date createTime;//创建时间
     private Date effectTime;//订单生效时间
     private Date unEffectTime;//订单失效时间
-    private Integer orderStatus;//订单状态(0:不可支付，1:已支付,-1:等待支付)
-    private Integer payStatus;//订单支付状态(0:失效，-1、生效前(预定)，1、生效中)
+    private Integer orderStatus;//订单状态(0:失效，-1、生效前(预定)，1、生效中)
+    private Integer payStatus;//订单支付状态(0:不可支付，1:已支付,-1:等待支付)
     private Date payTime;//支付时间
 }

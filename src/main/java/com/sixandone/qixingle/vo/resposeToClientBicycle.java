@@ -1,6 +1,8 @@
 package com.sixandone.qixingle.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -12,12 +14,14 @@ import java.math.BigDecimal;
  * @Date 2023/5/7 8:02
  **/
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class resposeToClientBicycle implements Serializable {
 
     private String bicycleNumber;//自行车编号
     private String bicycleBrand;//自行车品牌
-    private BigDecimal bicyclePrice;//自行车价格
+    private String bicyclePrice;//自行车价格
     private String bicycleType;//自行车类型
-    private byte[] bicycleImage;//自行车图片
+    private String businessId;//自行车所属人id
     private String bicycleInfo;//自行车备注
 }
